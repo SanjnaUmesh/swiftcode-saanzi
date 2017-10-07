@@ -14,20 +14,23 @@ import java.util.UUID;
 
 public class MessageActor extends UntypedActor {
 
-    public static Props props(ActorRef out){
+    public MessageActor(ActorRef out) {
+        this.out = out;
+    }
+
+    public static Props props(ActorRef out) {
         return Props.create(MessageActor.class, out);
     }
 
     private final ActorRef out;
-    private FeedService feedService = new FeedService;
+    private FeedService feedService = new FeedService();
     private NewsAgentService newsAgentService = new NewsAgentService();
 
-    public MessagesActor(ActorRef out){
-        this.out=out;
-    }
-    public void onRecieve(Object message)throws Exception{
-        ObjectMapper mapper=new ObjectMapper();
-        Message messageObject=new Message();
+
+    @Override
+    public void onReceive(Object message) throws Throwable {
+        ObjectMapper mapper = new ObjectMapper();
+        Message messageObject = new Message();
         if (message instanceof String) {
             messageObject.text = (String) message;
             messageObject.sender = Message.Sender.USER;
