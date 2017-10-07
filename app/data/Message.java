@@ -5,5 +5,6 @@ public class Message {
     public String time;
     public enum Sender{BOT,USER};
     public Sender sender;
+    public FeedResponse feedResponse;
 
 }
